@@ -6,7 +6,8 @@ toolchain go1.22.0
 
 require (
 	bou.ke/monkey v1.0.2
-	github.com/brianvoe/gofakeit v3.11.5+incompatible
+	github.com/brianvoe/gofakeit v3.18.0+incompatible
+	github.com/brianvoe/gofakeit/v7 v7.0.2
 	github.com/grafana/loki-client-go v0.0.0-20230116142646-e7494d0ef70c
 	github.com/prometheus/common v0.34.0
 	github.com/spf13/pflag v1.0.5

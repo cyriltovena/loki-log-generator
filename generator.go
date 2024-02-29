@@ -57,9 +57,8 @@ var Generators = []LogGenerator{
 			Level:   INFO,
 		}
 	},
+	NewLogFmtApp,
+	NewMysqlLogFmt,
 }
 
 // todo logfmt otel, json, errors, popular logs....
-
-// ts=2024-02-28T23:04:12.760535253Z caller=http.go:194 level=debug traceID=279a41b78e22cad1 orgID=1218 msg="POST /ingester.v1.IngesterService/Push (200) 1.134561ms"
-const HttpLogFmtFormat = `ts=%s caller=http.go:194 level=%s traceID=279a41b78e22cad1 orgID=1218 msg="POST /ingester.v1.IngesterService/Push (200) 1.134561ms"`

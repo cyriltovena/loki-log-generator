@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"math/rand"
 	"os"
 	"os/signal"
@@ -23,12 +22,12 @@ func main() {
 	}
 	defer client.Stop()
 
-	logger := LoggerFunc(func(labels model.LabelSet, timestamp time.Time, message string) error {
-		fmt.Println(labels, timestamp, message)
-		return nil
-	})
+	// logger := LoggerFunc(func(labels model.LabelSet, timestamp time.Time, message string) error {
+	// 	fmt.Println(labels, timestamp, message)
+	// 	return nil
+	// })
 	for _, generator := range Generators {
-		startApp(generateLabels(), logger, generator)
+		startApp(generateLabels(), client, generator)
 	}
 
 	done := make(chan os.Signal, 1)

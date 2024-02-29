@@ -2,7 +2,10 @@ package main
 
 import (
 	"math/rand"
+	"strings"
+	"time"
 
+	gofakeit "github.com/brianvoe/gofakeit/v7"
 	"github.com/prometheus/common/model"
 )
 
@@ -49,8 +52,17 @@ var level = []model.LabelValue{
 	ERROR,
 }
 
+var orgID = []string{randSeq(4), randSeq(4), randSeq(4), randSeq(4), randSeq(4)}
+
 func randLevel() model.LabelValue {
-	return level[rand.Intn(len(level))]
+	r := rand.Intn(100)
+	if r < 10 {
+		return ERROR
+	} else if r < 15 {
+		return WARN
+	} else {
+		return level[rand.Intn(len(level)-2)]
+	}
 }
 
 func generateLabels() model.LabelSet {
@@ -70,4 +82,35 @@ func randSeq(n int) string {
 		b[i] = letters[rand.Intn(len(letters))]
 	}
 	return string(b)
+}
+
+func randOrgID() string {
+	return orgID[rand.Intn(len(orgID))]
+}
+
+func randError() string {
+	switch rand.Intn(10) {
+	case 0:
+		return gofakeit.ErrorDatabase().Error()
+	case 1:
+		return gofakeit.ErrorGRPC().Error()
+	case 2:
+		return gofakeit.ErrorObject().Error()
+	case 3:
+		return gofakeit.ErrorRuntime().Error()
+	case 4:
+		return gofakeit.ErrorHTTP().Error()
+	default:
+		return gofakeit.Error().Error()
+	}
+}
+
+var filesNames = []string{gofakeit.ProductName(), gofakeit.ProductName(), gofakeit.ProductName(), gofakeit.Word(), gofakeit.Word()}
+
+func randFileName() string {
+	return strings.ReplaceAll(strings.ToLower(filesNames[rand.Intn(len(filesNames))]), " ", "_")
+}
+
+func randDuration() string {
+	return (time.Duration(gofakeit.Number(1, 30000)) * time.Millisecond).String()
 }
