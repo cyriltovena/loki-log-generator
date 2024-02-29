@@ -16,7 +16,14 @@ func main() {
 	url := flag.String("url", "http://localhost:3100/loki/api/v1/push", "Loki URL")
 	flag.Parse()
 
-	client, err := loki.NewWithDefault(*url)
+	cfg, err := loki.NewDefaultConfig(*url)
+	if err != nil {
+		panic(err)
+	}
+	cfg.BackoffConfig.MaxRetries = 1
+	cfg.BackoffConfig.MinBackoff = 100 * time.Millisecond
+	cfg.BackoffConfig.MaxBackoff = 100 * time.Millisecond
+	client, err := loki.New(cfg)
 	if err != nil {
 		panic(err)
 	}
